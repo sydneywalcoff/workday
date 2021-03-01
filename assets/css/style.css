@@ -75,3 +75,8 @@ textarea{
 .event {
   background-color: aqua;
 }
+
+.col-1 {
+  display: flex;
+  justify-content: center;
+}
