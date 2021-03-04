@@ -1,16 +1,3 @@
-const event9 = $("#9");
-const event10 = $("#10");
-const event11 = $("#11");
-const event12 = $("#12");
-const event13 = $("#13");
-const event14 = $("#14");
-const event15 = $("#15");
-const event16 = $("#16");
-const event17 = $("#17");
-
-
-let events = [];
-
 const createEvent = function() {
     
 
