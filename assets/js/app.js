@@ -26,8 +26,8 @@ const createEvent = function() {
 // event col click functionality
 $(".event").on("click", function() {
     // check if textarea already present
-    let length = $(this).html().length
-    console.log(length)
+    let length = $(this).html().length;
+    let rowId = $(this).attr("id");
     if(length == 0) {
         // create text area
         let textAreaEl = $("<textarea>").val("enter your event");
@@ -38,9 +38,6 @@ $(".event").on("click", function() {
 
         // highlight text box
         textAreaEl.trigger("focus");
-
-        // get id of event
-        let rowId = $(this).attr("id");
 
         // append text area to selected event col 
         $("#" + rowId).append(textAreaEl);
