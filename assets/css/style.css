@@ -70,13 +70,13 @@ textarea{
   transition: all .3s ease-in-out;
 }
 
+.col-1 {
+  display: flex;
+  justify-content: center;
+}
 
 /* temporary */
 .event {
   background-color: aqua;
 }
 
-.col-1 {
-  display: flex;
-  justify-content: center;
-}
