@@ -1,4 +1,4 @@
-const createEvent = (rowId) => {
+const createEvent = rowId => {
    // create text area
    let textAreaEl = $("<textarea>").val("enter your event");
 
@@ -13,12 +13,19 @@ const createEvent = (rowId) => {
    $("#" + rowId).append(textAreaEl);
 };
 
-const editEvent = (rowId) => {
+const editEvent = rowId => {
     let eventEl = $("#"+rowId).children();
     let eventText = eventEl.text();
     let newEventEl = $("<textarea>").text(eventText);
     eventEl.replaceWith(newEventEl);
     newEventEl.trigger("focus");
+};
+
+const saveButton = () => {
+    // grab event text from `.event col` textarea
+
+    // turn into `p` element
+
 };
 
 // event col click functionality
