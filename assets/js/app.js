@@ -29,7 +29,12 @@ $(".event").on("click", function() {
         // append text area to selected event col 
         $("#" + rowId).append(textAreaEl);
     } else {
-        console.log("not empty")
+        console.log("not empty");
+        let eventEl = $("#"+rowId).children();
+        let eventText = eventEl.text();
+        let newEventEl = $("<textarea>").text(eventText);
+        eventEl.replaceWith(newEventEl);
+        newEventEl.trigger("focus");
     }
 });
 
