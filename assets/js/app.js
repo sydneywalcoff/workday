@@ -1,3 +1,5 @@
+const savedEvents = []
+
 const createEvent = rowId => {
    // create text area
    let textAreaEl = $("<textarea>").val("enter your event");
@@ -25,7 +27,23 @@ const saveButton = (rowId) => {
 
     // turn into `p` element
     let savedEventEl = $("<p>").text(eventText);
-    event.replaceWith(savedEventEl)
+    
+    let updatedEvent = event.replaceWith(savedEventEl)
+
+    const eventObjHandler = (updatedEvent,rowId) => {
+        let event = {
+            eventName: updatedEvent.val(),
+            eventTime: rowId
+        }
+        console.log(event)
+    };
+
+    eventObjHandler(updatedEvent, rowId);
+    savedEvents.push(event);
+    console.log(savedEvents)
+    // save to localStorage
+    localStorage.setItem("events", JSON.stringify(savedEvents));
+
 };
 
 // event col click functionality
