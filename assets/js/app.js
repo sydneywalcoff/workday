@@ -26,8 +26,6 @@ const saveButton = (rowId) => {
     // turn into `p` element
     let savedEventEl = $("<p>").text(eventText);
     event.replaceWith(savedEventEl)
-
-    
 };
 
 // event col click functionality
@@ -41,8 +39,6 @@ $(".event").on("click", function() {
     else {
        editEvent(rowId);
     } 
-
-   
 });
 
 
