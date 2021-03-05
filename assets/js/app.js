@@ -11,6 +11,8 @@ const createEvent = rowId => {
 
    // append text area to selected event col 
    $("#" + rowId).append(textAreaEl);
+
+   $(".saveBtn").on("click", saveButton(rowId));
 };
 
 const editEvent = rowId => {
@@ -21,11 +23,11 @@ const editEvent = rowId => {
     newEventEl.trigger("focus");
 };
 
-const saveButton = () => {
+const saveButton = (rowId) => {
+    console.log(rowId);
     // grab event text from `.event col` textarea
 
     // turn into `p` element
-
 };
 
 // event col click functionality
@@ -39,4 +41,12 @@ $(".event").on("click", function() {
     else {
        editEvent(rowId);
     } 
+
+   
+});
+
+
+$(".saveBtn").on("click", function() {
+    let rowId = $(this).siblings()[1].getAttribute("id");
+    saveButton(rowId)
 });
