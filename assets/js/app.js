@@ -46,7 +46,6 @@ const loadEvents = () => {
 };
 
 
-
 const saveButton = rowId => {
     // grab event text from `.event col` textarea
     let eventEl = $("#" + rowId + " textarea");
@@ -73,8 +72,6 @@ const eventObjHandler = (updatedVal,rowId) => {
     }
 };
 
-console.log(events);
-
 // event col click functionality
 $(".event").on("click", function() {
     // check if textarea already present
@@ -95,3 +92,9 @@ $(".saveBtn").on("click", function() {
 });
 
 loadEvents();
+
+
+// moment
+let today = moment().format('dddd')
+$("#currentDay").text(today);
+
