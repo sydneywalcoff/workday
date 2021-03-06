@@ -1,26 +1,10 @@
 let savedEvents = [];
 let events = {};
 
-const saveEvent = () => {
-    // save to localStorage
-    localStorage.setItem("events", JSON.stringify(savedEvents));
-};
-
-
-const loadEvents = () => {
-    savedEvents = JSON.parse(localStorage.getItem("events"));
-    console.log(savedEvents);
-    if(!savedEvents) {
-        savedEvents = [];
-        // console.log(savedEvents)
-    }
-    // $.each(savedEvents, function(eventVal, eventTime) {
-    //     console.log(eventVal, eventTime);
-    // });
-};
-
-const createEvent = rowId => {
-   // create text area
+const createEvent = (eventVal, rowId) => {
+   let text = eventVal;
+   console.log(text);
+    // create text area
    let textAreaEl = $("<textarea>").val("enter your event");
 
    // highlight text box
@@ -39,7 +23,31 @@ const editEvent = rowId => {
     newEventEl.trigger("focus");
 };
 
-const saveButton = (rowId, event) => {
+const saveEvent = () => {
+    // save to localStorage
+    localStorage.setItem("events", JSON.stringify(savedEvents));
+};
+
+
+const loadEvents = () => {
+    savedEvents = JSON.parse(localStorage.getItem("events"));
+    console.log(savedEvents);
+    if(!savedEvents) {
+        savedEvents = [];
+        // console.log(savedEvents)
+    }
+    $.each(savedEvents, function(index) {
+        let eventText =savedEvents[index].eventVal;
+        let rowId = savedEvents[index].rowId;
+        let eventEl = $("<p>").text(eventText);
+        
+        $(".event#"+ rowId).append(eventEl);
+    });
+};
+
+
+
+const saveButton = rowId => {
     // grab event text from `.event col` textarea
     let eventEl = $("#" + rowId + " textarea");
     let eventText = eventEl.val();
@@ -52,7 +60,6 @@ const saveButton = (rowId, event) => {
     console.log(updatedVal);
     if (updatedVal) {
         eventObjHandler(updatedVal, rowId);
-        console.log(events)
         savedEvents.push(events);
         console.log(savedEvents);
         saveEvent();
@@ -62,7 +69,7 @@ const saveButton = (rowId, event) => {
 const eventObjHandler = (updatedVal,rowId) => {
     events = {
         eventVal: updatedVal,
-        eventTime: rowId
+        rowId: rowId
     }
 };
 
