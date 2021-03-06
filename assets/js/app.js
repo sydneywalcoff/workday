@@ -1,14 +1,15 @@
 let savedEvents = [];
 let events = {};
 
-const createEvent = (eventVal, rowId) => {
-   let text = eventVal;
+const createEvent = (rowId) => {
+   let text = $("#"+rowId).text();
    console.log(text);
     // create text area
-   let textAreaEl = $("<textarea>").val("enter your event");
+   let textAreaEl = $("<textarea>");
+   textAreaEl.val("enter your event");
 
    // highlight text box
-   textAreaEl.trigger("focus");
+   textAreaEl.focus();
 
    // append text area to selected event col 
    $("#" + rowId).append(textAreaEl);
@@ -20,7 +21,7 @@ const editEvent = rowId => {
     let eventText = eventEl.text();
     let newEventEl = $("<textarea>").text(eventText);
     eventEl.replaceWith(newEventEl);
-    newEventEl.trigger("focus");
+    newEventEl.focus();
 };
 
 const saveEvent = () => {
@@ -34,7 +35,7 @@ const loadEvents = () => {
     console.log(savedEvents);
     if(!savedEvents) {
         savedEvents = [];
-        // console.log(savedEvents)
+        console.log(savedEvents)
     }
     $.each(savedEvents, function(index) {
         let eventText =savedEvents[index].eventVal;
@@ -59,10 +60,21 @@ const saveButton = rowId => {
     console.log(updatedVal);
     if (updatedVal) {
         eventObjHandler(updatedVal, rowId);
-        savedEvents.push(events);
-        console.log(savedEvents);
-        saveEvent();
+        
+        // checking if matching value in array before pushing
+        for(i=0; i < savedEvents.length; i++) {
+            if(savedEvents[i].rowId === rowId) {
+                console.log("replace");
+                savedEvents.splice(i, 1);
+                
+            } 
+        }
+       
     }
+    console.log(events)
+    savedEvents.push(events);
+    console.log(savedEvents);
+    saveEvent();
 };
 
 const eventObjHandler = (updatedVal,rowId) => {
@@ -78,10 +90,12 @@ $(".event").on("click", function() {
     let length = $(this).html().length;
     let rowId = $(this).attr("id");
     if(length == 0) {
+        console.log("you are creating a new event");
         createEvent(rowId);
     } 
     else {
-       editEvent(rowId);
+        console.log("you are editing an existing event");
+        editEvent(rowId);
     } 
 });
 
@@ -95,6 +109,24 @@ loadEvents();
 
 
 // moment
-let today = moment().format('dddd')
+let today = moment().format('dddd');
 $("#currentDay").text(today);
+let currentHour = moment().format('HH');
 
+for(let i =9; i <=17; i++) {
+    // grab event cols
+    const events = $("#" + i);
+    const rowId = events.attr("id");
+    console.log("current Hour: " + currentHour);
+    console.log("current rowId: "+ rowId)
+    if(currentHour > i) {
+        events.addClass("past");
+        console.log(`${currentHour} is later than ${i}`)
+    } else if(currentHour == i) {
+        events.addClass("present");
+        console.log(`${currentHour} is equal to ${i}`)
+    } else if(currentHour < i) {
+        events.addClass("future");
+        console.log(`${currentHour} is earlier than ${i}`)
+    };
+};
