@@ -1,4 +1,5 @@
 let savedEvents = [];
+let events = {};
 
 const saveEvent = () => {
     // save to localStorage
@@ -10,12 +11,13 @@ const loadEvents = () => {
     savedEvents = JSON.parse(localStorage.getItem("events"));
     console.log(savedEvents);
     if(!savedEvents) {
-        console.log("no events saved!")
+        savedEvents = [];
+        // console.log(savedEvents)
     }
+    // $.each(savedEvents, function(eventVal, eventTime) {
+    //     console.log(eventVal, eventTime);
+    // });
 };
-
-loadEvents();
-console.log(savedEvents);
 
 const createEvent = rowId => {
    // create text area
@@ -37,31 +39,34 @@ const editEvent = rowId => {
     newEventEl.trigger("focus");
 };
 
-const saveButton = (rowId) => {
+const saveButton = (rowId, event) => {
     // grab event text from `.event col` textarea
-    let event = $("#" + rowId + " textarea");
-    let eventText = event.val();
+    let eventEl = $("#" + rowId + " textarea");
+    let eventText = eventEl.val();
 
     // turn into `p` element
     let savedEventEl = $("<p>").text(eventText);
     
-    let updatedEvent = event.replaceWith(savedEventEl)
+    let updatedEvent = eventEl.replaceWith(savedEventEl)
     let updatedVal = updatedEvent.val();
+    console.log(updatedVal);
     if (updatedVal) {
-        eventObjHandler(updatedEvent, rowId);
-        savedEvents.push(event);
+        eventObjHandler(updatedVal, rowId);
+        console.log(events)
+        savedEvents.push(events);
         console.log(savedEvents);
         saveEvent();
     }
 };
 
 const eventObjHandler = (updatedVal,rowId) => {
-    let event = {
-        eventEl: updatedVal,
+    events = {
+        eventVal: updatedVal,
         eventTime: rowId
     }
-    console.log(event)
 };
+
+console.log(events);
 
 // event col click functionality
 $(".event").on("click", function() {
@@ -79,5 +84,7 @@ $(".event").on("click", function() {
 
 $(".saveBtn").on("click", function() {
     let rowId = $(this).siblings()[1].getAttribute("id");
-    saveButton(rowId)
+    saveButton(rowId);
 });
+
+loadEvents();
