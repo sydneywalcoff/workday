@@ -1,4 +1,21 @@
-const savedEvents = []
+let savedEvents = [];
+
+const saveEvent = () => {
+    // save to localStorage
+    localStorage.setItem("events", JSON.stringify(savedEvents));
+};
+
+
+const loadEvents = () => {
+    savedEvents = JSON.parse(localStorage.getItem("events"));
+    console.log(savedEvents);
+    if(!savedEvents) {
+        console.log("no events saved!")
+    }
+};
+
+loadEvents();
+console.log(savedEvents);
 
 const createEvent = rowId => {
    // create text area
@@ -29,21 +46,21 @@ const saveButton = (rowId) => {
     let savedEventEl = $("<p>").text(eventText);
     
     let updatedEvent = event.replaceWith(savedEventEl)
+    let updatedVal = updatedEvent.val();
+    if (updatedVal) {
+        eventObjHandler(updatedEvent, rowId);
+        savedEvents.push(event);
+        console.log(savedEvents);
+        saveEvent();
+    }
+};
 
-    const eventObjHandler = (updatedEvent,rowId) => {
-        let event = {
-            eventName: updatedEvent.val(),
-            eventTime: rowId
-        }
-        console.log(event)
-    };
-
-    eventObjHandler(updatedEvent, rowId);
-    savedEvents.push(event);
-    console.log(savedEvents)
-    // save to localStorage
-    localStorage.setItem("events", JSON.stringify(savedEvents));
-
+const eventObjHandler = (updatedVal,rowId) => {
+    let event = {
+        eventEl: updatedVal,
+        eventTime: rowId
+    }
+    console.log(event)
 };
 
 // event col click functionality
