@@ -2,8 +2,6 @@ let savedEvents = [];
 let events = {};
 
 const createEvent = (rowId) => {
-   let text = $("#"+rowId).text();
-   console.log(text);
     // create text area
    let textAreaEl = $("<textarea>");
    textAreaEl.val("enter your event");
@@ -32,10 +30,8 @@ const saveEvent = () => {
 
 const loadEvents = () => {
     savedEvents = JSON.parse(localStorage.getItem("events"));
-    console.log(savedEvents);
     if(!savedEvents) {
         savedEvents = [];
-        console.log(savedEvents)
     }
     $.each(savedEvents, function(index) {
         let eventText =savedEvents[index].eventVal;
@@ -57,23 +53,19 @@ const saveButton = rowId => {
     
     let updatedEvent = eventEl.replaceWith(savedEventEl)
     let updatedVal = updatedEvent.val();
-    console.log(updatedVal);
     if (updatedVal) {
         eventObjHandler(updatedVal, rowId);
         
         // checking if matching value in array before pushing
         for(i=0; i < savedEvents.length; i++) {
             if(savedEvents[i].rowId === rowId) {
-                console.log("replace");
                 savedEvents.splice(i, 1);
                 
             } 
         }
        
     }
-    console.log(events)
     savedEvents.push(events);
-    console.log(savedEvents);
     saveEvent();
 };
 
@@ -90,11 +82,9 @@ $(".event").on("click", function() {
     let length = $(this).html().length;
     let rowId = $(this).attr("id");
     if(length == 0) {
-        console.log("you are creating a new event");
         createEvent(rowId);
     } 
     else {
-        console.log("you are editing an existing event");
         editEvent(rowId);
     } 
 });
@@ -117,16 +107,11 @@ for(let i =9; i <=17; i++) {
     // grab event cols
     const events = $("#" + i);
     const rowId = events.attr("id");
-    console.log("current Hour: " + currentHour);
-    console.log("current rowId: "+ rowId)
     if(currentHour > i) {
         events.addClass("past");
-        console.log(`${currentHour} is later than ${i}`)
     } else if(currentHour == i) {
         events.addClass("present");
-        console.log(`${currentHour} is equal to ${i}`)
     } else if(currentHour < i) {
         events.addClass("future");
-        console.log(`${currentHour} is earlier than ${i}`)
     };
 };
